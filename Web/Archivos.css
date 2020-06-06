@@ -1,0 +1,31 @@
+body{
+    margin: 0;
+    display: grid;
+    grid-template-columns: 12vw auto 15vw;
+    grid-template-rows: 12vh  88vh;
+    grid-template-areas:
+      "Menu Header Header"
+      "Menu Content Support";
+}
+header{
+    position: relative;
+    display: flex;
+    grid-area: Header;
+    background-color: bisque;
+}
+#Menu{
+    background-color: #d7f2d2;
+    grid-area: Menu;
+}
+#Menu ul{
+    list-style: none;
+}
+#Vista{
+    grid-area: Content;
+    background-color: darkcyan;
+}
+#Uploads{
+    grid-area: Support;
+    background-color: darkgrey;
+}
+
