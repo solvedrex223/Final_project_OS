@@ -1,3 +1,7 @@
+a {
+    text-decoration: unset;
+    color: unset;
+}
 body{
     margin: 0;
     display: grid;
@@ -22,10 +26,24 @@ header{
 #Menu{
     background-color: #9bcc9f;
     grid-area: Menu;
+
 }
 #Menu ul{
     list-style: none;
+    padding: 0;
 }
+#Menu ul li{
+    padding: 2vh 2vw 2vh 2vw;
+}
+#menuBtn{
+    text-decoration: none;
+    color: #001e00
+}
+#menuBtn:hover{
+    background-color: #daeadb;
+    color: green;
+}
+
 
 #Vista{
     grid-area: Content;
