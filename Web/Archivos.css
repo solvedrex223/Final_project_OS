@@ -6,26 +6,37 @@ body{
     grid-template-areas:
       "Menu Header Header"
       "Menu Content Support";
+      font-family: 'Roboto', sans-serif;
 }
+
 header{
     position: relative;
     display: flex;
     grid-area: Header;
-    background-color: bisque;
+    margin: 0;
+    color: #459649;
+    background-color: #e3f2e4;
+
 }
+
 #Menu{
-    background-color: #d7f2d2;
+    background-color: #9bcc9f;
     grid-area: Menu;
 }
 #Menu ul{
     list-style: none;
 }
+
 #Vista{
     grid-area: Content;
-    background-color: darkcyan;
+    background-color: #e1ede2;
 }
 #Uploads{
     grid-area: Support;
-    background-color: darkgrey;
+    background-color: #daeadb;
+    color: #08ce12;
 }
 
+#Logo{
+    width: 8vW;
+}
