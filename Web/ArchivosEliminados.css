@@ -1,0 +1,136 @@
+/**************************************************************
+Global Styles
+***************************************************************/
+a {
+    text-decoration: unset;
+    color: unset;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+/**************************************************************
+Grid Setup
+***************************************************************/
+body{
+    margin: 0;
+    display: grid;
+    grid-template-columns: 12vw auto 15vw;
+    grid-template-rows: 12vh  88vh;
+    grid-template-areas:
+      "Menu Header Header"
+      "Menu Content Support";
+      font-family: 'Roboto', sans-serif;
+}
+
+/**************************************************************
+Header
+***************************************************************/
+header{
+    grid-area: Header;
+    margin: 0;
+    color: #459649;
+    background-color: #e3f2e4;
+    padding-left: 3vw;
+}
+
+/**************************************************************
+Menu
+***************************************************************/
+#Menu{
+    background-color: #9bcc9f;
+    grid-area: Menu;
+
+}
+
+#Logo{
+    width: 8vW;
+}
+
+#Menu ul{
+    list-style: none;
+    padding: 0;
+}
+#Menu ul li{
+    padding: 2vh 2vw 2vh 2vw;
+}
+#menuBtn{
+    text-decoration: none;
+    color: #001e00
+}
+#menuBtn:hover{
+    background-color: #daeadb;
+    color: green;
+}
+
+/**************************************************************
+Vista
+***************************************************************/
+
+#Vista{
+    grid-area: Content;
+    background-color: #e1ede2;
+}
+#Vista table{
+    padding-left: 2vw;
+    padding-top: 2vh;
+}
+#Vista table th{
+ 
+    padding-bottom: 2vh;
+    text-align: left;
+}
+#Vista table tbody tr{
+    height: 4.5vh;
+
+}
+#Vista thead th {
+    border-bottom:  solid;
+    border-width: 1px;
+    border-color: #9bcc9f;
+    padding-top: 2vh;
+}
+#Vista tr:nth-child(even) {background-color: #f2f2f2;}
+
+#Nombre{
+    width: 22vw;
+}
+#UltimaModificacion{
+    width: 10vw;
+}
+#Formato{
+    width: 10vw;
+}
+#Peso{
+    width:8vw;
+}
+#Descarga{
+    width: 7vw;
+}
+#Opciones{
+    width: 7vw;
+}
+.nombre{
+    padding-left: 2vw;
+}
+
+
+/**************************************************************
+Uploads
+***************************************************************/
+
+#Uploads{
+    grid-area: Support;
+    background-color: #daeadb;
+    color: #08ce12;
+}
+#Uploads section{
+    padding-left: 2vw;
+    padding-top: 4vh;
+}
+
+#Uploads table tbody tr{
+    height: 4vh;
+}
+
