@@ -6,7 +6,7 @@
     <title>Archivos Eliminados</title>
 
 
-    <link rel="stylesheet" type="text/css" href="Archivos.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="ArchivosEliminados.css" media="screen"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 
 
@@ -32,30 +32,45 @@
             <table>
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Ultima Modificacion</th>
-                        <th scope="col">Formato</th>
+                        <th scope="col" id="Nombre" class="nombre">Nombre</th>
+                        <th scope="col" id="UltimaModificacion">Ultima Modificacion</th>
+                        <th scope="col" id="Formato">Formato</th>
+                        <th scope="col" id="Peso">Peso</th>
+                        <th scope="col" id="Restaurar">Restaurar</th>
+                        <th scope="col" id="Eliminar">Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Archivo 1</td>
+                        <td class="nombre">Archivo 1</td>
                         <td>17/02/2020</td>
                         <td>Docx</td>
+                        <td>1.2 Gb</td>
+                        <td><button>Restaurar</button></td>
+                        <td><button>Eliminar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="nombre">Archivo 1</td>
+                        <td>17/02/2020</td>
+                        <td>Docx</td>
+                        <td>1.2 Gb</td>
+                        <td><button>Restaurar</button></td>
+                        <td><button>Eliminar</button></td>
                     </tr>
                 </tbody>
             </table>
         </section>
     </div>
 
+
     <!-- Division  Uploads, Permite Subir archivos, carpetas y crear carpetas.-->
-    <div id = "Uploads">
+    <div id = "Eliminaciones">
         <section>
             <table>
-                <tr><td>Subir Archivo</td></tr>
-                <tr><td>Crear Carpeta</td></tr>
-                <tr><td>Subir Carpeta</td></tr>
+                <tr><td>Restaurar Todo</td></tr>
+                <tr><td>Eliminar Todo</td></tr>
             </table>
+            <h5>***Nota usted dispone de 30 dias, desde la fecha de eliminacion para restaurar sus archivos.</h6>
         </section>
     </div>
 

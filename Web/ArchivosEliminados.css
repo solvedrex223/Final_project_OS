@@ -105,10 +105,10 @@ Vista
 #Peso{
     width:8vw;
 }
-#Descarga{
+#Restaurar{
     width: 7vw;
 }
-#Opciones{
+#Eliminar{
     width: 7vw;
 }
 .nombre{
@@ -120,17 +120,19 @@ Vista
 Uploads
 ***************************************************************/
 
-#Uploads{
+#Eliminaciones{
     grid-area: Support;
     background-color: #daeadb;
     color: #08ce12;
 }
-#Uploads section{
+#Eliminaciones section{
     padding-left: 2vw;
     padding-top: 4vh;
 }
 
-#Uploads table tbody tr{
+#Eliminaciones table tbody tr{
     height: 4vh;
 }
-
+#Eliminaciones h5{
+    color: #459649;
+}
