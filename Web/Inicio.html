@@ -6,7 +6,7 @@
     <title>Inicio</title>
 
 
-    <link rel="stylesheet" type="text/css" href="Archivos.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="Inicio.css" media="screen"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
 
 
@@ -28,7 +28,41 @@
 
     <!-- Division VistaDeArchivos, Muestra los archivos existentes, Permite descargar, renombrar y eliminar archivos.-->
     <div id  = "Vista">
-        <section>
+        <section id="Recientes">
+            <h2>Recientes</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col" id="Nombre" class="nombre">Nombre</th>
+                        <th scope="col" id="UltimaModificacion">Ultima Modificacion</th>
+                        <th scope="col" id="Formato">Formato</th>
+                        <th scope="col" id="Peso">Peso</th>
+                        <th scope="col" id="Descarga">Descargar</th>
+                        <th scope="col" id="Opciones">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="nombre">Archivo 1</td>
+                        <td>17/02/2020</td>
+                        <td>Docx</td>
+                        <td>1.2 Gb</td>
+                        <td><button>Descarga</button></td>
+                        <td><button>Opciones</button></td>
+                    </tr>
+                    <tr>
+                        <td class="nombre">Archivo 1</td>
+                        <td>17/02/2020</td>
+                        <td>Docx</td>
+                        <td>1.2 Gb</td>
+                        <td><button>Descarga</button></td>
+                        <td><button>Opciones</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <section id = "Favoritos">
+            <h2>Favoritos</h2>
             <table>
                 <thead>
                     <tr>
