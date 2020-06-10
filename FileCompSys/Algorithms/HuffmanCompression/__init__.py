@@ -22,6 +22,6 @@ del freqList
 print(huffTree.root.freq)
 compTable = huffTree.CompressionTable()
 for key in compTable.keys(): print(key,compTable[key])
-compTable = BT.binarize(compTable)
+##compTable = BT.binarize(compTable)
 for key in compTable.keys(): print(key,compTable[key])
 Fp.FileCompression(filepath,compTable)
