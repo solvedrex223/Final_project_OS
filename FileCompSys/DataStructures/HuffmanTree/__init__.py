@@ -28,10 +28,10 @@ class node:
         else:
             if self.left:
                 self.left.cmpValue = self.cmpValue + "0"
-                self.left.HuffmanTable(CompTable)
+                self.left.CompressionTable(CompTable)
             if self.right:
                 self.right.cmpValue = self.cmpValue + "1"
-                self.right.HuffmanTable(CompTable)
+                self.right.CompressionTable(CompTable)
 
 
 class HuffTree:
