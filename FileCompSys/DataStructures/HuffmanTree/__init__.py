@@ -22,6 +22,17 @@ class node:
             if self.right:
                 self.right.cmpValue = self.cmpValue + "1"
                 self.right.HuffmanTable(hufftable)
+    def CompressionTable(self, CompTable):
+        if self.char:
+            CompTable[self.char] = self.cmpValue
+        else:
+            if self.left:
+                self.left.cmpValue = self.cmpValue + "0"
+                self.left.HuffmanTable(CompTable)
+            if self.right:
+                self.right.cmpValue = self.cmpValue + "1"
+                self.right.HuffmanTable(CompTable)
+
 
 class HuffTree:
     def __init__(self, freq, char = None):
@@ -42,12 +53,18 @@ class HuffTree:
             self.root.HuffmanTable(huffTable)
             return huffTable
         else: return False
+    def CompressionTable(self):
+        if self.root:
+            CompTable = {}
+            self.root.CompressionTable(CompTable)
+            return CompTable
     def toFile(self, filepath):
         #stores the tree in a file
         return True
     def FromFile(filename):
         #builds the tree from the path
         return True
+
 
 
 
