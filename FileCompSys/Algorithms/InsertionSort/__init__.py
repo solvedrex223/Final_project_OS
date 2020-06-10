@@ -13,7 +13,7 @@ def insertionSort(A):
     i = 1
     maxindex = 1 
     while(i < l):
-        if A[i] < A[i-1] and i >= 1:
+        if A[i].root.freq > A[i-1].root.freq and i >= 1:
             A[i], A[i-1] = A[i-1], A[i]
             i -= 1
         else:
@@ -21,9 +21,3 @@ def insertionSort(A):
             i = maxindex
         #print(A) shows the algorithm
     return True
-                    
-if __name__ == '__main__':
-    A =  A = [15,10, 25, 40,12, 18, 1]
-    insertionSort(A)
-    print(A)
-    
