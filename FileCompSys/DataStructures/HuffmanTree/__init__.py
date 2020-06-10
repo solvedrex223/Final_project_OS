@@ -17,20 +17,20 @@ class node:
             hufftable[self.cmpValue] =  self.char
         else:
             if self.left:
-                self.left.cmpValue = self.cmpValue + "0"
+                self.left.cmpValue =   "0" + self.cmpValue
                 self.left.HuffmanTable(hufftable)
             if self.right:
-                self.right.cmpValue = self.cmpValue + "1"
+                self.right.cmpValue =   "1" + self.cmpValue
                 self.right.HuffmanTable(hufftable)
     def CompressionTable(self, CompTable):
         if self.char:
             CompTable[self.char] = self.cmpValue
         else:
             if self.left:
-                self.left.cmpValue = self.cmpValue + "0"
+                self.left.cmpValue =  "0" + self.cmpValue
                 self.left.CompressionTable(CompTable)
             if self.right:
-                self.right.cmpValue = self.cmpValue + "1"
+                self.right.cmpValue =   "1" + self.cmpValue
                 self.right.CompressionTable(CompTable)
 
 
