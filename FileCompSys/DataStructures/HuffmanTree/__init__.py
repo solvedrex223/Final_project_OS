@@ -1,3 +1,7 @@
+#This file contains a huffman's tree for encoding.
+
+#coded and maintained by zikln - rodrigoor1999@outlook.com
+
 class node:
     def __init__(self, freq, char = None):
         self.freq = freq
@@ -11,8 +15,9 @@ class node:
         print(self.freq, end= ",")
         if self.right:
             self.right.inLevelTraversal()
-    # Returns the hufftable needed for decompresion, it is based on inlevelTraversal
+
     def HuffmanTable(self,hufftable):
+        #Traverses the tree and add to the hash table key = char, value = binary value for compression.
         if self.char:
             hufftable[self.cmpValue] =  self.char
         else:
@@ -23,28 +28,33 @@ class node:
                 self.right.cmpValue =   "1" + self.cmpValue
                 self.right.HuffmanTable(hufftable)
     def CompressionTable(self, CompTable):
+        #Traverses the tree and add to the hash table key = char, value = binary value for compression.
         if self.char:
             CompTable[self.char] = self.cmpValue
         else:
             if self.left:
-                self.left.cmpValue =  "0" + self.cmpValue
+                self.left.cmpValue =   self.cmpValue + "0"
                 self.left.CompressionTable(CompTable)
             if self.right:
-                self.right.cmpValue =   "1" + self.cmpValue
+                self.right.cmpValue =  self.cmpValue + "1"
                 self.right.CompressionTable(CompTable)
 
 
 class HuffTree:
     def __init__(self, freq, char = None):
         self.root = node(freq, char)
+        return
     def  merge(self, hufftree):
+        ##Merges to tree under a parent node with no char value and wich frequency is equal to the kids.
         newroot = node(self.root.freq + hufftree.root.freq)
         newroot.left = self.root
         newroot.right = hufftree.root
         self.root = newroot
+        return
     def inLevelTraversal(self):
         if self.root:
             self.root.inLevelTraversal()
+            return
         else: return False
     def HuffmanTable(self):
         # Returns the hufftable needed for decompresion
@@ -54,21 +64,18 @@ class HuffTree:
             return huffTable
         else: return False
     def CompressionTable(self):
+        #Returns compression table needed for compression
         if self.root:
             CompTable = {}
             self.root.CompressionTable(CompTable)
             return CompTable
-    def toFile(self, filepath):
-        #stores the tree in a file
-        return True
-    def FromFile(filename):
-        #builds the tree from the path
-        return True
+        return False
 
 
 
 
-###Samples
+
+    ###Samples
 if __name__ == "__main__":
     a = HuffTree(5,"h")
     b = HuffTree(3,"s")

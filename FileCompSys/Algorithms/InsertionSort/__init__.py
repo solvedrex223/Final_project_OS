@@ -8,6 +8,8 @@ worst Case: O(n^2)
 Best Case: O(n)
 '''
 
+#coded and maintained by zikln - rodrigoor1999@outlook.com
+
 def insertionSort(A):
     l = len(A)
     i = 1

@@ -5,6 +5,7 @@ Space Complexity O(n)
 where n are the characters in a file.
 '''
 
+#coded and maintained by zikln - rodrigoor1999@outlook.com
 
 def buildFreqHashTable(filepath):
     file  = open(filepath, "r")
