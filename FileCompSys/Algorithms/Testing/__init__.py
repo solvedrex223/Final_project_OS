@@ -7,4 +7,7 @@ if __name__ == "__main__":
     comp = open("../words_alpha.txtdcmp", "r")
     content1 = noncomp.read()
     content2 = comp.read()
+    number = comp.fileno()
+    print(number)
+    
     print(content1 == content2)
