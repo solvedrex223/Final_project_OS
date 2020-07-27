@@ -1,0 +1,19 @@
+html{
+    background-color: rgb(66, 182, 50);
+}
+
+#logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15%;
+    width: 100px;
+    height: 100px;
+}
+.log{
+    text-align: center;
+    font-size: 18px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
