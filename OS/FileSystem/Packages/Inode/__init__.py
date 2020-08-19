@@ -1,5 +1,5 @@
 from Packages.General_funcctions import int_to_string, string_to_int, write_str_bin, bytes_to_string
-
+from math import  ceil
 
 #Useful functions from the outside self.write and self.read
 #id parameter should always be filled during instantiation.
@@ -14,13 +14,14 @@ Useful SuperBlocks methods
 write()
 read()
 delete()
-
+parse_all()
+binarize_all()
 all other methods should not be called on regular basis since they are used to built the "Useful ones".
 '''
 
 
 class Inode():
-    def __init__(self, id ,owner = "", group = "", access_permissions = [[],[],[]], filetype = "", file_access_time = "",
+    def __init__(self, id ,owner = 0, group = 0, access_permissions = [[True,True,True],[True,True,True],[True,True,True]], filetype = "x", file_access_time = "19700101",
                  links = 0, size = 0, table_of_contents = []):
         self.owner = owner
         self.group = group
@@ -104,7 +105,7 @@ class Inode():
         for i in range(3):
             for bool in self.access_permissions[i]:
                 if bool: string += "1"
-                else: string +=0
+                else: string += '0'
         string += "0" * 7
         newstring = ""
         for i in range(len(string) // 8):
@@ -123,7 +124,8 @@ class Inode():
         self.binarize_access_permissions()
         return True
     def get_block(self):
-        return 3 + self.id//16
+        returnable = self.id//16
+        return 3 + returnable
 
     def get_offset(self):
         return ((self.id-1)%16) * 64
@@ -147,6 +149,7 @@ class Inode():
         file = open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.get_block()) + ".block", "r+b")
         offset = self.get_offset()
         file.seek(offset + 2)
+        self.filetype = "0"
         file.write(bytes([ord(self.filetype)]))
         file.close()
         return
@@ -165,3 +168,145 @@ class Inode():
         self.parse_all()
         file.close()
         return True
+
+    def find_all_blocks(self):
+        queue = [[],[],[],[]]
+        blocks = ceil(self.size / 1024)
+        block  = 0
+        while block < blocks:
+
+            if block < 8:
+                queue[0].append(self.table_of_contents[block])
+                block += 1
+            elif len(queue[1] ) ==0:
+                queue[0].append(self.table_of_contents[block])
+                offset = 0
+                file = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[8]) + ".block",
+                    "rb")
+                while block < blocks and offset < 1024:
+                    offset += 4
+                    queue[1].append(string_to_int(bytes_to_string(file.read(4))))
+                    block +=1
+                file.close()
+
+            elif len(queue[2])==0:
+                queue[0].append(self.table_of_contents[9])
+                file_1 = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[9]) + ".block",
+                    "rb")
+                offset_1 = 0
+                while block < blocks and offset_1 < 1024:
+                    offset_1 += 4
+                    queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
+                    offset_2 = 0
+                    file_2 =  open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[1][-1]) + ".block",
+                    "rb")
+                    while block < blocks and offset_2 < 1024:
+                        offset_2 += 4
+                        queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
+                        block += 1
+                    file_2.close()
+                file_1.close()
+
+            else:
+                queue[0].append(self.table_of_contents[10])
+                file_1 = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[10]) + ".block",
+                    "rb")
+                offset_1 = 0
+                while block < blocks and offset_1 < 1024:
+                    offset_1 += 4
+                    queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
+                    offset_2 = 0
+                    file_2 = open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[1][-1]) + ".block",
+                                  "rb")
+                    while block < blocks and offset_2 < 1024:
+                        offset_2 += 4
+                        queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
+                        file_3 = open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[2][-1]) + ".block",
+                                  "rb")
+                        offset_3 = 0
+                        while block < blocks and offset_3 < 1024:
+                            offset_3 += 4
+                            queue[3].append(string_to_int(bytes_to_string(file_3.read(4))))
+                            block += 1
+                        file_3.close()
+                    file_2.close()
+                file_1.close()
+        returnable = []
+        for q in queue:
+            returnable += q
+        return returnable
+
+    def find_content_blocks(self):
+        queue = [[],[],[],[]]
+        queue2 = []
+        blocks = ceil(self.size / 1024)
+        block  = 0
+        while block < blocks:
+            if block < 8:
+                queue[0].append(self.table_of_contents[block])
+                queue2.append(queue[0][-1])
+                block += 1
+            elif len(queue[1] ) ==0:
+                queue[0].append(self.table_of_contents[block])
+                offset = 0
+                file = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[8]) + ".block",
+                    "rb")
+                while block < blocks and offset < 1024:
+                    offset += 4
+                    queue[1].append(string_to_int(bytes_to_string(file.read(4))))
+                    queue2.append(queue[1][-1])
+                    block +=1
+                file.close()
+
+            elif len(queue[2])==0:
+                queue[0].append(self.table_of_contents[9])
+                file_1 = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[9]) + ".block",
+                    "rb")
+                offset_1 = 0
+                while block < blocks and offset_1 < 1024:
+                    offset_1 += 4
+                    queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
+                    offset_2 = 0
+                    file_2 =  open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[1][-1]) + ".block",
+                    "rb")
+                    while block < blocks and offset_2 < 1024:
+                        offset_2 += 4
+                        queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
+                        queue2.append(queue[2][-1])
+                        block += 1
+                    file_2.close()
+                file_1.close()
+
+            else:
+                queue[0].append(self.table_of_contents[10])
+                file_1 = open(
+                    "/home/zikin/Documents/Final_project_OS/hard_drive/" + str(self.table_of_contents[10]) + ".block",
+                    "rb")
+                offset_1 = 0
+                while block < blocks and offset_1 < 1024:
+                    offset_1 += 4
+                    queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
+                    offset_2 = 0
+                    file_2 = open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[1][-1]) + ".block",
+                                  "rb")
+                    while block < blocks and offset_2 < 1024:
+                        offset_2 += 4
+                        queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
+                        file_3 = open("/home/zikin/Documents/Final_project_OS/hard_drive/" + str(queue[2][-1]) + ".block",
+                                  "rb")
+                        offset_3 = 0
+                        while block < blocks and offset_3 < 1024:
+                            offset_3 += 4
+                            queue[3].append(string_to_int(bytes_to_string(file_3.read(4))))
+                            queue2.append(queue[3][-1])
+                            block += 1
+                        file_3.close()
+                    file_2.close()
+                file_1.close()
+        returnable = queue2
+        return returnable
