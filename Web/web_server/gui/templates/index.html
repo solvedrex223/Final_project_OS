@@ -1,13 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'gui/style.css' %}">
-    <title>Pied Piper</title>
-</head>
-<body>
+{% block content %}
     <img src="{% static 'gui/img/logo.jpg' %}" alt="" id="logo">
     <form action="" method="POST">
         <label for="user" class="log">User</label>
@@ -17,7 +10,6 @@
         <input type="password" name="pass" class="log">
         <div></div>
         <input type="submit" value="Log In" class="log">
+        <a href="new_user" class="log">Create User</a>
     </form>
-    <a href="new_user">Create User</a>
-</body>
-</html>
+{% endblock content %}

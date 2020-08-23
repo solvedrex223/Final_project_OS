@@ -43,10 +43,12 @@ INSTALLED_APPS = [
     'django.contrib.redirects',
     'gui.apps.GuiConfig',
     'file_system.apps.FileSystemConfig',
+    'cache_headers',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'cache_headers.middleware.CacheHeadersMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',

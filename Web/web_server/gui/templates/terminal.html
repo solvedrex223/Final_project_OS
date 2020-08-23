@@ -1,11 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminal</title>
+    <link rel="stylesheet" href="{% static 'gui/style.css' %}">
+    <script src="{% static 'gui/jquery-3.5.1.js' %}"></script>
+    <script type = "text/javascript" src="{% static 'gui/terminal.js' %}"></script>
+    <title>Pied Piper</title>
 </head>
 <body>
-    
+    <label for="terminal" id = "dir">C:</label>
+    <input type="text" name="terminal" id="terminal">
+    <button type="submit" id="check">Run</button>
 </body>
+
 </html>
