@@ -10,7 +10,7 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.check == 1) {
-                    $(location).attr(href, '/terminal');
+                    $(location).attr('href', '/terminal');
                 }
                 else{
                     alert("Usuario o contraseña incorrecta");

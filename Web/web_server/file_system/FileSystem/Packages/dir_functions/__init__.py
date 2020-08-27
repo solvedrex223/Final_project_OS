@@ -176,8 +176,8 @@ def find_block(no_block, array):
         file.close()
         return data_block
 
-
-def ls(cwd):
+#upd
+def ls(cwd, param = ""):
     content = [[], []]
     stored = ""
     for block in cwd.find_content_blocks():
@@ -203,20 +203,23 @@ def ls(cwd):
         if len(content[0]) != len(content[1]):
             content[1].pop()
     returnable=[[],[]]
-    for i in range(len(content[0])):
-        if int(content[0][i]) != 0:
-            returnable[0].append(content[0][i])
-            returnable[1].append(content[1][i])
+    if param != 'd':
+        for i in range(len(content[0])):
+            if int(content[0][i]) != 0:
+                returnable[0].append(content[0][i])
+                returnable[1].append(content[1][i])
+    else:
+        return content
     return returnable
 
-
-
+#upd
 def rm_from_dir(dir_name, cwd):
     byte_no = find_file(cwd, dir_name)
     files = find_files(cwd)
     if files.get(dir_name,False):
         inode_no = files[dir_name]
     else:
+        print("error")
         return False
     block = find_block(byte_no // 1024, cwd.table_of_contents)
     file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block) + ".block", "r+b")
@@ -242,8 +245,9 @@ def find_files(cwd):
         files[content[1][i][:-1]] = int(content[0][i])
     return files
 
+#upd
 def find_file(cwd, name):
-    content = ls(cwd)
+    content = ls(cwd, param="d")
     offset = 0
     for i in range(len(content[0])):
         if content[1][i] == name+'\n':
@@ -251,6 +255,21 @@ def find_file(cwd, name):
         else:
             offset += 4 + len(content[1][i])
     return -1
+
+def mv( cwd ,  filename, dest, dest_name=""):
+    if dest_name == "":
+        dest_name = filename
+    files = find_files(cwd)
+    if files.get(dest, False):
+        dest_inode = files[dest]
+    else:
+        return False
+    if files.get(filename, False):
+        file_inode = files[filename]
+    else: return False
+    add_file_to_dir(i_dir = dest_inode, i_file = file_inode, name = dest_name)
+    rm_from_dir(dir_name = filename, cwd = cwd)
+    return True
 
 
 def cd(dir_name, files):
@@ -272,3 +291,9 @@ def cd(dir_name, files):
         wd = Inode(wd)
         wd.read()
         return wd
+
+def ls_format(ls_content):
+    String = ""
+    for i in range(len(ls_content[0])):
+        String += str(ls_content[0][i]) + " " + str(ls_content[1][i])
+    return String

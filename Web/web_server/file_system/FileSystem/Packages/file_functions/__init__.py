@@ -133,9 +133,13 @@ def cat(inode_no):
     inode = Inode(int(inode_no))
     inode.read()
     content = ""
-    for no_block in inode.find_content_blocks():
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(no_block) + ".block",
+    blocks = inode.find_content_blocks()
+    for i in range(len(blocks)):
+        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(blocks[i]) + ".block",
                                       "r+b")
-        content += bytes_to_string(file.read())
+        if i == len(blocks) -1:
+            content += bytes_to_string(file.read(inode.size %1024))
+        else:
+            content += bytes_to_string(file.read())
         file.close()
     return content

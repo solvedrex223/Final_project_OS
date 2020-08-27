@@ -5,13 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'gui/style.css' %}">
-    <script src="{% static 'gui/jquery-3.5.1.js' %}"></script>
-    <script type = "text/javascript" src="{% static 'gui/terminal.js' %}"></script>
+    <script src="{% static 'gui/js/jquery-3.5.1.js' %}"></script>
+    <script type = "text/javascript" src="{% static 'gui/js/terminal.js' %}">
+        var len = 0;
+    </script>
     <title>Pied Piper</title>
 </head>
 <body>
-    <label for="terminal" id = "dir">C:</label>
-    <input type="text" name="terminal" id="terminal">
+    <textarea name="terminal" id="terminal" cols="30" rows="10"></textarea>
     <button type="submit" id="check">Run</button>
 </body>
 
