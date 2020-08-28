@@ -44,6 +44,7 @@ def mkroot():
     write_str_bin(file,int_to_string(2,4)+'..'+'\n')
     dir.binarize_all()
     dir.write()
+    mkdir('home', Inode(2))
     return
 
 
