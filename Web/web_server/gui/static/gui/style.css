@@ -19,6 +19,16 @@ html{
 }
 #terminal{
     width: 500px;
-    height: 500px;
+    height: 200px;
     text-anchor: start;
+}
+.terminal{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.mkfile{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }

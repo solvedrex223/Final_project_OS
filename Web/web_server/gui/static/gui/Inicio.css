@@ -115,6 +115,25 @@ Vista
     padding-left: 2vw;
 }
 
+/*************************************************************
+Recientes & Favoritos
+**************************************************************/
+#Recientes, #Favoritos{
+    height: 36vh;
+    
+}
+#Recientes h2, #Favoritos h2{
+    width: 25vw;
+    color: #459649;
+    position: relative;
+    left: 2vw;
+    border-bottom:  solid;
+    border-width: 1px;
+    border-color: #9bcc9f;
+    
+}
+
+
 
 /**************************************************************
 Uploads
@@ -134,3 +153,18 @@ Uploads
     height: 4vh;
 }
 
+#terminal{
+    width: 500px;
+    height: 200px;
+    text-anchor: start;
+}
+.terminal{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.mkfile{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

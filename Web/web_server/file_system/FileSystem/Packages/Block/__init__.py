@@ -1,6 +1,13 @@
 import sys
-sys.path.insert(1, 'D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server')
-from file_system.FileSystem.Packages.General_funcctions import string_to_int, write_str_bin, bytes_to_string, int_to_string
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+for i in range(len(string) - 1):
+    string[i]+= "\\"
+r_sys = "".join(string)
+sys.path.insert(1, r_sys)
+from file_system.FileSystem.Packages.General_funcctions import string_to_int, write_str_bin, bytes_to_string, int_to_string,route
 from file_system.FileSystem.Packages.Inode import Inode
 '''
 
@@ -27,7 +34,7 @@ class Block:
         self.info = chr(0) *1024
         self.mem_usada  = 0
         self.id = id
-        self.filepath = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"+str(id)+".block"
+        self.filepath = route+str(id)+".block"
     def append_info(self, info): #Adds new info to self.info
         if self.mem_usada > 1024:
             return False
@@ -162,9 +169,9 @@ class super_block(Block):
         if len(self.LBL) != 1:
             return False
         block = self.LBL.pop()
-        self.filepath = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block) + ".block"
+        self.filepath = route + str(block) + ".block"
         self.load()
-        self.filepath = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.id) + ".block"
+        self.filepath = route + str(self.id) + ".block"
         self.write_info()
         return block
 
@@ -176,10 +183,10 @@ class super_block(Block):
         return True
 
     def clean_LBL(self,block_no):
-        self.filepath = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block_no) + ".block"
+        self.filepath = route + str(block_no) + ".block"
         self.write_info()
         self.LBL = [block_no]
-        self.filepath = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/\2.block"
+        self.filepath =  route + "2.block"
         self.write_info()
         return True
 
@@ -223,3 +230,12 @@ class super_block(Block):
             self.LIL.reverse()
             self.write_info()
             return True
+
+# if __name__ == "__main__":
+#     string = sys.path[0]
+#     string = string.split("\\")
+#     string.pop()
+#     for i in range(len(string)):
+#         string[i]+= "\\"
+#     string = "".join(string)
+#     print(string)

@@ -4,9 +4,19 @@ At the time this file only contains general use parsing functions
 
 '''
 import os
+import sys
 
-  
-
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+string.append("file_system")
+string.append("FileSystem")
+string.append("Packages")
+for i in range(len(string)):
+    string[i]+= "/"
+string = "".join(string)
+route = string+"hard_drive/"
 def string_to_int(string):
     binary  = ""
     num = 0

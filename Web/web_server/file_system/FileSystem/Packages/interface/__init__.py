@@ -1,5 +1,12 @@
 import sys
-sys.path.insert(1, 'D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server')
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+for i in range(len(string) - 1):
+    string[i]+= "\\"
+r_sys = "".join(string)
+sys.path.insert(1, r_sys)
 from file_system.FileSystem.Packages.file_functions import *
 from file_system.FileSystem.Packages.dir_functions import *
 from file_system.FileSystem.Packages.Block import *
@@ -8,38 +15,83 @@ from file_system.FileCompSys.Calls import *
 ruta = ''
 cwd = Inode(id= 2)
 past_rt = []
-def lexo(command,user):
+def lexo(command,user,data):
     global ruta
     global cwd
     cwd.read()
     ipt = command
-    if len(ipt) == 2 and ipt[1] == 'ls':
-        return [ls_format(ls(cwd)),ruta]
+    if len(ipt) >= 2 and ipt[1] == 'ls':
+        try:
+            if ipt [2]:
+                return [ls_format(ls(cwd,ipt[2])),ruta]
+            else:
+                return [ls_format(ls(cwd)),ruta]
+        except:
+            return [ls_format(ls(cwd)),ruta]
     elif len(ipt) == 3 and ipt[1] == 'cd':
         dest = ipt[2]
+        wd = cwd.id
         cwd = cd(dest,find_files(cwd))
-        if (dest == ".."):
-            if (len(past_rt) == 0):
-                ruta = ''
-            else:
-                ruta = ''
-                past_rt.pop(len(past_rt) - 1)
-                for i in range(len(past_rt)):
-                    if i == 0:
-                        ruta += past_rt[i]
-                    else:    
-                        ruta += "/" + past_rt[i]
-                
-        else:
-            ruta = ''
-            past_rt.append(dest)
+        if (cwd.id == wd):
             for i in range(len(past_rt)):
+                    ruta = ''
                     if i == 0:
                         ruta += past_rt[i]
                     else:    
                         ruta += "/" + past_rt[i]
-        return [ruta]
-        
+            return["No es una ruta valida\n",ruta]
+        else:
+            if (dest == ".."):
+                if user != "admin" and cwd.id == 2:
+                    cwd = Inode(wd)
+                    ruta = ''
+                    for i in range(len(past_rt)):
+                        if i == 0:
+                            ruta += past_rt[i]
+                        else:    
+                            ruta += "/" + past_rt[i]
+                    return ["No tienes permiso para acceder a ese directorio\n",ruta]
+                elif (len(past_rt) == 0):
+                    ruta = ''
+                    return [ruta]
+                else:
+                    ruta = ''
+                    past_rt.pop(len(past_rt) - 1)
+                    for i in range(len(past_rt)):
+                        if i == 0:
+                            ruta += past_rt[i]
+                        else:    
+                            ruta += "/" + past_rt[i]
+                    return[ruta]  
+            else:
+                try:
+                    if past_rt[len(past_rt) - 1] == 'home' and user != 'admin' and dest != user:
+                        cwd = Inode(wd)
+                        ruta = ''
+                        for i in range(len(past_rt)):
+                            if i == 0:
+                                ruta += past_rt[i]
+                            else:    
+                                ruta += "/" + past_rt[i]
+                        return["No tienes permiso para acceder a ese directorio\n",ruta]
+                    else:
+                        ruta = ''
+                        past_rt.append(dest)
+                        for i in range(len(past_rt)):
+                            if i == 0:
+                                ruta += past_rt[i]
+                            else:    
+                                ruta += "/" + past_rt[i]
+                        return [ruta]
+                except:
+                    ruta = ''
+                    past_rt.append(dest)
+                    for i in range(len(past_rt)):
+                        if i == 0:
+                            ruta += past_rt[i]
+                        else:    
+                            ruta += "/" + past_rt[i]
+                    return [ruta]
     elif len(ipt) == 3 and ipt[1] == 'mkdir':
         dest = ipt[2]
         mkdir(dest, cwd)
@@ -47,15 +99,7 @@ def lexo(command,user):
 
     elif len(ipt) == 3 and ipt[1] == 'mkfile':
         dest = ipt[2]
-        print("write *q + [enter] to end the file")
-        content = ''
-        while(True):
-            newline = input()
-            if newline == '*q':
-                break
-            else:
-                content += newline + '\n'
-        mk_file(0, content,dest,cwd.id)
+        mk_file(0, data,dest,cwd.id)
         return [ruta]
             
     elif len(ipt) == 3 and ipt[1] == 'rm':
@@ -89,13 +133,18 @@ def lexo(command,user):
             return [ruta]
         else:
             return("File doesn't exist or more than 2 args for dcmp\n" + ruta)
-    elif len(ipt) > 4 and ipt[1] == 'mv':
-        if len(ipt) == 3:
+    elif len(ipt) > 3 and ipt[1] == 'mv':
+        if len(ipt) == 4:
             mv(cwd = cwd,filename=ipt[2], dest=ipt[3])
             return [ruta]
         else:
             mv(cwd=cwd, filename=ipt[2], dest=ipt[3], dest_name = ipt[4])
             return [ruta]
+    elif ipt[0] == "log_out" and data == True:
+        while cwd.id != 2:
+            cwd = cd('..',find_files(cwd))
+            past_rt.pop(len(past_rt) - 1)
+        return [True]
     else:
         return [ruta]
 

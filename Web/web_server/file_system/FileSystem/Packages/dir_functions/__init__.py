@@ -1,6 +1,13 @@
 import sys
-sys.path.insert(1, 'D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server')
-from file_system.FileSystem.Packages.General_funcctions import bytes_to_string, string_to_int, write_str_bin, int_to_string
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+for i in range(len(string) - 1):
+    string[i]+= "\\"
+r_sys = "".join(string)
+sys.path.insert(1, r_sys)
+from file_system.FileSystem.Packages.General_funcctions import bytes_to_string, string_to_int, write_str_bin, int_to_string,route
 from file_system.FileSystem.Packages.Inode import Inode
 import file_system.FileSystem.Packages.Block as B
 
@@ -15,7 +22,7 @@ def mkdir(name, cwd):
     dir.filetype = 'd'
     dir.size = 13
     dir.table_of_contents[0] = LBL.free_block()
-    file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(dir.table_of_contents[0]) + ".block", "r+b")
+    file = open(route + str(dir.table_of_contents[0]) + ".block", "r+b")
     write_str_bin(file,int_to_string(dir.id,4)+'.'+'\n')
     write_str_bin(file,int_to_string(cwd.id,4)+'..'+'\n')
     dir.binarize_all()
@@ -32,7 +39,7 @@ def mkroot():
     dir.filetype = 'd'
     dir.size = 13
     dir.table_of_contents[0] = LBL.free_block()
-    file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(dir.table_of_contents[0]) + ".block", "r+b")
+    file = open(route + str(dir.table_of_contents[0]) + ".block", "r+b")
     write_str_bin(file,int_to_string(2,4)+'.'+'\n')
     write_str_bin(file,int_to_string(2,4)+'..'+'\n')
     dir.binarize_all()
@@ -52,14 +59,14 @@ def add_file_to_dir(i_dir, i_file,name):
     if (future_size //1024 == current_size //1024):
         offset = current_size % 1024
         writing_block = find_block(block, i_dir.table_of_contents)
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(writing_block) + ".block", "r+b")
+        file = open(route + str(writing_block) + ".block", "r+b")
         file.seek(offset)
         write_str_bin(file, int_to_string(i_file.id, 4) + name + "\n")
         file.close()
     else:
         offset = current_size % 1024
         writing_block = find_block(block, i_dir.table_of_contents)
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(writing_block) + ".block", "r+b")
+        file = open(route + str(writing_block) + ".block", "r+b")
         file.seek(offset)
         string1 = int_to_string(i_file.id, 4) + name + "\n"[0:1024 - offset]
         string2 = int_to_string(i_file.id, 4) + name + "\n"[1024 - offset:]
@@ -74,7 +81,7 @@ def add_file_to_dir(i_dir, i_file,name):
             offset_1 = (block - 8) % 256
             if  offset_1== 0:
                 i_dir.table_of_contents[8] = LBL.free_block()
-            file_1 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(i_dir.table_of_contents[8]) + ".block", "r+b")
+            file_1 = open(route + str(i_dir.table_of_contents[8]) + ".block", "r+b")
             file_1.seek(offset_1 *4)
             new_block = LBL.free_block()
             write_str_bin(file_1,int_to_string(new_block,4))
@@ -86,7 +93,7 @@ def add_file_to_dir(i_dir, i_file,name):
             offset_2 = (block - 264) % 256
             if  offset_1== 0:
                 i_dir.table_of_contents[9] = LBL.free_block()
-            file_1 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(i_dir.table_of_contents[9]) + ".block", "r+b")
+            file_1 = open(route + str(i_dir.table_of_contents[9]) + ".block", "r+b")
             file_1.seek(offset_R1 *4)
             if offset_2 == 0:
                 new_block = LBL.free_block()
@@ -94,7 +101,7 @@ def add_file_to_dir(i_dir, i_file,name):
             else:
                 new_block = string_to_int(bytes_to_string(file_1.read(4)))
             file_1.close()
-            file_2 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(new_block) + ".block", "r+b")
+            file_2 = open(route + str(new_block) + ".block", "r+b")
             file_2.seek(offset_2 *4)
             new_block = LBL.free_block()
             write_str_bin(file_2, int_to_string(new_block, 4))
@@ -106,7 +113,7 @@ def add_file_to_dir(i_dir, i_file,name):
             offset_3 = (block - 65800) % 256
             if  block == 65800:
                 i_dir.table_of_contents[10] = LBL.free_block()
-            file_1 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(i_dir.table_of_contents[10]) + ".block", "r+b")
+            file_1 = open(route + str(i_dir.table_of_contents[10]) + ".block", "r+b")
             file_1.seek(offset_1 *4)
             if offset_2 == 0:
                 new_block = LBL.free_block()
@@ -114,7 +121,7 @@ def add_file_to_dir(i_dir, i_file,name):
             else:
                 new_block = string_to_int(bytes_to_string(file_1.read(4)))
             file_1.close()
-            file_2 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(new_block) + ".block", "r+b")
+            file_2 = open(route + str(new_block) + ".block", "r+b")
             file_2.seek(offset_2 *4)
             if offset_3 == 0:
                 new_block = LBL.free_block()
@@ -122,13 +129,13 @@ def add_file_to_dir(i_dir, i_file,name):
             else:
                 new_block = string_to_int(bytes_to_string(file_2.read(4)))
             file_2.close()
-            file_3 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(new_block) + ".block", "r+b")
+            file_3 = open(route + str(new_block) + ".block", "r+b")
             file_3.seek(offset_3 *4)
             new_block = LBL.free_block()
             write_str_bin(file_3, int_to_string(new_block, 4))
             last_block = new_block
             file_3.close()
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(last_block) + ".block", "r+b")
+        file = open(route + str(last_block) + ".block", "r+b")
         write_str_bin(file, string2)
         file.close()
     i_dir.size = future_size
@@ -140,7 +147,7 @@ def find_block(no_block, array):
     if no_block < 8:
         return array[no_block]
     elif no_block < 264:
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"+array[8]+".block", "rb")
+        file = open(route+array[8]+".block", "rb")
         file.seek((no_block - 8) *4)
         data_block  = string_to_int(bytes_to_string(file.read(4)))
         file.close()
@@ -148,11 +155,11 @@ def find_block(no_block, array):
     elif no_block < 65800:
         offset_1 = (no_block - 264)//256
         offset_2 = (no_block - 264)%256
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + array[9] + ".block", "rb")
+        file = open(route + array[9] + ".block", "rb")
         file.seek(offset_1 * 4)
         data_block = string_to_int(bytes_to_string(file.read(4)))
         file.close()
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" +data_block + ".block", "rb")
+        file = open(route +data_block + ".block", "rb")
         file.seek(offset_2 * 4)
         data_block = string_to_int(bytes_to_string(file.read(4)))
         file.close()
@@ -162,15 +169,15 @@ def find_block(no_block, array):
         offset_1 = (no_block - 65800)//65536
         offset_2 = (no_block - 65800)%65536
         offset_3 = (no_block - 65800)%256
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + array[9] + ".block", "rb")
+        file = open(route + array[9] + ".block", "rb")
         file.seek(offset_1 * 4)
         data_block = string_to_int(bytes_to_string(file.read(4)))
         file.close()
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" +data_block + ".block", "rb")
+        file = open(route +data_block + ".block", "rb")
         file.seek(offset_2 * 4)
         data_block = string_to_int(bytes_to_string(file.read(4)))
         file.close()
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" +data_block + ".block", "rb")
+        file = open(route +data_block + ".block", "rb")
         file.seek(offset_3 * 4)
         data_block = string_to_int(bytes_to_string(file.read(4)))
         file.close()
@@ -181,7 +188,7 @@ def ls(cwd, param = ""):
     content = [[], []]
     stored = ""
     for block in cwd.find_content_blocks():
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block) + ".block", "rb")
+        file = open(route + str(block) + ".block", "rb")
         offset = 0
         while offset < 1024:
             for line in file.readlines():
@@ -210,6 +217,15 @@ def ls(cwd, param = ""):
                 returnable[1].append(content[1][i])
     else:
         return content
+    content = returnable
+    if param  == "-l":
+        content.append([])
+        c_inode = Inode(1)
+        for i in range(len(content[0])):
+            c_inode.id = (int(content[0][i]))
+            c_inode.read()
+            content[2].append(c_inode.size)
+        return content
     return returnable
 
 #upd
@@ -222,7 +238,7 @@ def rm_from_dir(dir_name, cwd):
         print("error")
         return False
     block = find_block(byte_no // 1024, cwd.table_of_contents)
-    file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block) + ".block", "r+b")
+    file = open(route + str(block) + ".block", "r+b")
     file.seek(byte_no%1024)
     bytes = (byte_no % 1024 + len(dir_name) + 1)
     if bytes < 1024:
@@ -232,7 +248,7 @@ def rm_from_dir(dir_name, cwd):
         write_str_bin(file, chr(0) * (1024- (byte_no%1024)))
         file.close()
         block = find_block(byte_no // 1024 +1, cwd.table_of_contents)
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(block) + ".block", "r+b")
+        file = open(route + str(block) + ".block", "r+b")
         write_str_bin(file, chr(0) * (bytes -1023))
         file.close()
     return int(inode_no)
@@ -280,13 +296,13 @@ def cd(dir_name, files):
         if wd.filetype == 'd':
             return wd
         else:
-            print(dir_name+" is not a directory.")
+            print(False)    
             wd = files['.']
             wd = Inode(wd)
             wd.read()
             return wd
     else:
-        print("directory doesn't exist")
+        print(False)
         wd = files['.']
         wd = Inode(wd)
         wd.read()
@@ -294,6 +310,10 @@ def cd(dir_name, files):
 
 def ls_format(ls_content):
     String = ""
-    for i in range(len(ls_content[0])):
-        String += str(ls_content[0][i]) + " " + str(ls_content[1][i])
+    if len(ls_content) == 2:
+        for i in range(len(ls_content[0])):
+            String += str(ls_content[0][i]) + " " + str(ls_content[1][i])
+    else:
+        for i in range(len(ls_content[0])):
+            String += str(ls_content[0][i]) + " " + str(ls_content[1][i][:-1]) + " " + str(ls_content[2][i]) +"\n"
     return String

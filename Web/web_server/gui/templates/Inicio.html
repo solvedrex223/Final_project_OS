@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <script src="{% static 'gui/js/jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'gui/js/terminal.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'gui/Inicio.css' %}" media="screen"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> 
+
+
+</head>
+
+<body>
+    <header> <h1>Inicio</h1></header>
+        
+    
+    <!-- Division Menu, Permite cambiar entre las paginas del sitio, cada una tiene su propia funcionalidad-->
+    <div id = "Menu">
+        <ul>
+            <li><a href="/terminal"><img src="{% static 'gui/img/logo.jpg' %}" id ="Logo"> </a></li>
+            <a href="/terminal"><li id= "menuBtn" >Inicio</li> </a>
+            <a href="/log_out"><li id= "menuBtn" >Cerrar Sesion</li></a>
+        </ul>
+    </div>
+
+    <!-- Division VistaDeArchivos, Muestra los archivos existentes, Permite descargar, renombrar y eliminar archivos.-->
+    <div id  = "Vista">
+        <section id="Recientes">
+            <h2>Shell</h2>
+            <br>
+            <textarea name="terminal" id="terminal" cols="30" rows="10" class="terminal"></textarea>
+            <br>
+            <button type="submit" id="check" class="terminal">Run</button>
+        </section>
+        <section id = "Favoritos">
+            <h2>Complementos</h2>
+            <textarea id="text" class="mkfile"></textarea>
+            <br>
+            <button type="submit" id="check2" class="mkfile">Send</button>
+        </section>
+    </div>
+
+
+    <!-- Division  Uploads, Permite Subir archivos, carpetas y crear carpetas.-->
+    <div id = "Uploads">
+        <section>
+        </section>
+    </div>
+
+
+</body>
+</html>

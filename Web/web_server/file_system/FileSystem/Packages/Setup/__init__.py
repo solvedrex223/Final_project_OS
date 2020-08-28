@@ -2,14 +2,21 @@ import os
 import datetime
 
 import sys
-sys.path.insert(1, 'D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server')
-from file_system.FileSystem.Packages.General_funcctions import int_to_string, string_to_int, bytes_to_string
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+for i in range(len(string) - 1):
+    string[i]+= "\\"
+r_sys = "".join(string)
+sys.path.insert(1, r_sys)
+from file_system.FileSystem.Packages.General_funcctions import int_to_string, string_to_int, bytes_to_string,route
 from file_system.FileSystem.Packages.Inode import Inode
 from file_system.FileSystem.Packages.dir_functions import mkroot
 
 
 
-def set_hard_drive(dir_path = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"):
+def set_hard_drive(dir_path = route):
     '''try:
         print(True)
         os.mkdir(dir_path)
@@ -20,12 +27,12 @@ def set_hard_drive(dir_path = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_O
     #placeholder = chr(0) * 1024
     for i in range(1, 1000001):
         print(i)
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"+str(i)+".block","wb")
+        file = open(route+str(i)+".block","wb")
         file.write(bytes([0]*1024))
         file.close()
     return True
     
-def set_inodes_list(dir_path = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"):
+def set_inodes_list(dir_path = route):
     filepath = dir_path + "/1.block"
     file = open(filepath, "wb")
     for i in range(264,8,-1):
@@ -34,7 +41,7 @@ def set_inodes_list(dir_path = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_
     file.close()
     return True
 
-def set_block_list(dir_path = "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"):
+def set_block_list(dir_path = route):
     filepath = dir_path + "/2.block"
     file = open(filepath, "wb")
     for i in range(1003 + 255, 1003 - 1, -1):
@@ -79,7 +86,18 @@ def read_inodes(min = 1, max = 16000 ):
     return True
 
 if __name__ == "__main__":
-    #set_hard_drive()
+    directory = sys.path[0]
+    directory = directory.split("\\")
+    directory.pop()
+    directory.append("hard_drive")
+    for i in range(len(directory) - 1):
+        directory[i]+= '\\'
+    directory = "".join(directory)
+    try:
+        os.mkdir(directory)
+    except:
+        pass  
+    set_hard_drive()
     set_inodes_list()
     set_inodes()
     set_block_list()

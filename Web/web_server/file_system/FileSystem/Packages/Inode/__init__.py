@@ -1,6 +1,13 @@
 import sys
-sys.path.insert(1, 'D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server')
-from file_system.FileSystem.Packages.General_funcctions import int_to_string, string_to_int, write_str_bin, bytes_to_string
+string = sys.path[0]
+string = string.split("\\")
+while string[len(string) - 1] != "web_server":
+    string.pop()
+for i in range(len(string) - 1):
+    string[i]+= "\\"
+r_sys = "".join(string)
+sys.path.insert(1, r_sys)
+from file_system.FileSystem.Packages.General_funcctions import int_to_string, string_to_int, write_str_bin, bytes_to_string,route
 from math import  ceil
 
 #Useful functions from the outside self.write and self.read
@@ -133,7 +140,7 @@ class Inode():
         return ((self.id-1)%16) * 64
 
     def write(self):
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/"+str(self.get_block())+".block", "r+b")
+        file = open(route+str(self.get_block())+".block", "r+b")
         offset = self.get_offset()
         file.seek(offset)
         file.write(bytes([ord(self.owner)]))
@@ -148,7 +155,7 @@ class Inode():
         return True
 
     def delete(self):
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.get_block()) + ".block", "r+b")
+        file = open(route + str(self.get_block()) + ".block", "r+b")
         offset = self.get_offset()
         file.seek(offset + 2)
         self.filetype = "0"
@@ -157,7 +164,7 @@ class Inode():
         return
 
     def read(self):
-        file = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.get_block()) + ".block", "rb")
+        file = open(route + str(self.get_block()) + ".block", "rb")
         file.seek(self.get_offset())
         self.owner = bytes_to_string(file.read(1))
         self.group = bytes_to_string(file.read(1))
@@ -184,7 +191,7 @@ class Inode():
                 queue[0].append(self.table_of_contents[block])
                 offset = 0
                 file = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[8]) + ".block",
+                    route + str(self.table_of_contents[8]) + ".block",
                     "rb")
                 while block < blocks and offset < 1024:
                     offset += 4
@@ -195,14 +202,14 @@ class Inode():
             elif len(queue[2])==0:
                 queue[0].append(self.table_of_contents[9])
                 file_1 = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[9]) + ".block",
+                    route + str(self.table_of_contents[9]) + ".block",
                     "rb")
                 offset_1 = 0
                 while block < blocks and offset_1 < 1024:
                     offset_1 += 4
                     queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
                     offset_2 = 0
-                    file_2 =  open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[1][-1]) + ".block",
+                    file_2 =  open(route + str(queue[1][-1]) + ".block",
                     "rb")
                     while block < blocks and offset_2 < 1024:
                         offset_2 += 4
@@ -214,19 +221,19 @@ class Inode():
             else:
                 queue[0].append(self.table_of_contents[10])
                 file_1 = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[10]) + ".block",
+                    route + str(self.table_of_contents[10]) + ".block",
                     "rb")
                 offset_1 = 0
                 while block < blocks and offset_1 < 1024:
                     offset_1 += 4
                     queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
                     offset_2 = 0
-                    file_2 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[1][-1]) + ".block",
+                    file_2 = open(route + str(queue[1][-1]) + ".block",
                                   "rb")
                     while block < blocks and offset_2 < 1024:
                         offset_2 += 4
                         queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
-                        file_3 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[2][-1]) + ".block",
+                        file_3 = open(route + str(queue[2][-1]) + ".block",
                                   "rb")
                         offset_3 = 0
                         while block < blocks and offset_3 < 1024:
@@ -255,7 +262,7 @@ class Inode():
                 queue[0].append(self.table_of_contents[block])
                 offset = 0
                 file = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[8]) + ".block",
+                    route + str(self.table_of_contents[8]) + ".block",
                     "rb")
                 while block < blocks and offset < 1024:
                     offset += 4
@@ -267,14 +274,14 @@ class Inode():
             elif len(queue[2])==0:
                 queue[0].append(self.table_of_contents[9])
                 file_1 = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[9]) + ".block",
+                    route + str(self.table_of_contents[9]) + ".block",
                     "rb")
                 offset_1 = 0
                 while block < blocks and offset_1 < 1024:
                     offset_1 += 4
                     queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
                     offset_2 = 0
-                    file_2 =  open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[1][-1]) + ".block",
+                    file_2 =  open(route + str(queue[1][-1]) + ".block",
                     "rb")
                     while block < blocks and offset_2 < 1024:
                         offset_2 += 4
@@ -287,19 +294,19 @@ class Inode():
             else:
                 queue[0].append(self.table_of_contents[10])
                 file_1 = open(
-                    "D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(self.table_of_contents[10]) + ".block",
+                    route + str(self.table_of_contents[10]) + ".block",
                     "rb")
                 offset_1 = 0
                 while block < blocks and offset_1 < 1024:
                     offset_1 += 4
                     queue[1].append(string_to_int(bytes_to_string(file_1.read(4))))
                     offset_2 = 0
-                    file_2 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[1][-1]) + ".block",
+                    file_2 = open(route + str(queue[1][-1]) + ".block",
                                   "rb")
                     while block < blocks and offset_2 < 1024:
                         offset_2 += 4
                         queue[2].append(string_to_int(bytes_to_string(file_2.read(4))))
-                        file_3 = open("D:/Documentos/Proyectos Uni/FP_OS/Final_project_OS/Web/web_server/file_system/FileSystem/Packages/hard_drive/" + str(queue[2][-1]) + ".block",
+                        file_3 = open(route + str(queue[2][-1]) + ".block",
                                   "rb")
                         offset_3 = 0
                         while block < blocks and offset_3 < 1024:

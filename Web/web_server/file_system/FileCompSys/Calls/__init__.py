@@ -25,6 +25,9 @@ def dcmp(file_name, cwd, new_file_name):
             inode_no_cmp = int(blocks[0][i])
         if blocks[1][i][:-1] == file_name[:-3] + 'tree':
             inode_no_tree = int(blocks[0][i])
-
-    FileDecompression(inode_no_tree=inode_no_tree, inode_no_cmp=inode_no_cmp, file_name=new_file_name, cwd=cwd.id)
+    try:
+        FileDecompression(inode_no_cmp=inode_no_cmp, file_name=new_file_name, cwd=cwd.id,inode_no_tree=inode_no_tree)
+    except Exception:
+        return True
+    
     return True
