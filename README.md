@@ -10,7 +10,7 @@ Webpage for the fnished version is Solved.pythonanywhere.com
 		mkfile [filename]: create a text file
 		rm [filename]: delete file
 		rmdir [empty dirname]: remove directory
-		cat: displays content of text file
+		cat [filename]: displays content of text file
 		cmp [filename to cmp]: compresses file
 		dcmp [filename to dcmp] [newfilename]: decompresses file
 	
